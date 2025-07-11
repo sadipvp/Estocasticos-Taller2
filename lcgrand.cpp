@@ -46,5 +46,5 @@ double lcgrand(int num)
   if (zi < 0)
     zi += MODLUS;
   zrng[num] = zi;
-  return (zi >> 7 || 1) / 16777216.0;
+  return (zi >> 7 | 1) / 16777216.0;
 }
