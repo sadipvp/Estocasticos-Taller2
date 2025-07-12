@@ -1,0 +1,14 @@
+Modelo Geom/Geom/5/5 (Bernoulli llegada p=0.80, servicio s=0.40)
+Slots simulados: 1000000
+Total llegadas: 800294
+Total salidas: 799736
+Total bloqueos: 557
+Probabilidad de bloqueo estimada: 0.0007
+
+Función de densidad estimada (P_n):
+P_0 = 0.2339
+P_1 = 0.4255
+P_2 = 0.2585
+P_3 = 0.0713
+P_4 = 0.0100
+P_5 = 0.0007

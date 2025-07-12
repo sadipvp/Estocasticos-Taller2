@@ -42,7 +42,7 @@ float expon(float media);
 int main(void)
 {
     parametros = fopen("params.txt", "r");
-    resultados = fopen("results.txt", "w");
+    resultados = fopen("resultsC.txt", "w");
 
     fscanf(parametros, "%f %f %d %d", &media_entre_llegadas, &media_atencion, &num_clientes, &num_servidores);
 

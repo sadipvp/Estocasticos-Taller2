@@ -7,8 +7,8 @@
 #include "lcgrand.cpp"
 
 // Constantes
-#define OCUPADO 1            // Indicador de servidor ocupado
-#define LIBRE 0              // Indicador de servidor libre
+#define OCUPADO 1 // Indicador de servidor ocupado
+#define LIBRE 0   // Indicador de servidor libre
 
 // Variables de estado del sistema
 int num_servidores;         // Número de servidores
@@ -48,10 +48,11 @@ void actualizar_prom_tiempo(void);
 float expon(float mean);
 
 // Funcion Principal
-int main(void) {
+int main(void)
+{
     // Abrir los archivos de entrada y salida
     parametros = fopen("params.txt", "r");
-    resultados = fopen("results.txt", "w");
+    resultados = fopen("resultsB.txt", "w");
 
     // Especifica el numero de eventos para la funcion control_tiempo.
     num_eventos = 2;
@@ -70,19 +71,21 @@ int main(void) {
     inicializar();
 
     // Corre la simulacion mientras no se atienda el numero de clientes especificado.
-    while (num_clientes_atendidos < num_clientes) {
+    while (num_clientes_atendidos < num_clientes)
+    {
         // Determinar el siguiente evento
         control_tiempo();
         // Actualiza los acumuladores estadisticos de tiempo
         actualizar_prom_tiempo();
         // Invoca la funcion del siguiente evento
-        switch (sig_tipo_evento) {
-            case 1:
-                llegada();
-                break;
-            case 2:
-                salida();
-                break;
+        switch (sig_tipo_evento)
+        {
+        case 1:
+            llegada();
+            break;
+        case 2:
+            salida();
+            break;
         }
     }
 
@@ -94,7 +97,8 @@ int main(void) {
 }
 
 // Funcion de inicializacion.
-void inicializar(void) {
+void inicializar(void)
+{
     // Inicializa el reloj de la simulacion.
     tiempo_simulacion = 0.0;
 
@@ -113,22 +117,26 @@ void inicializar(void) {
 }
 
 // Control del tiempo de la simulacion
-void control_tiempo(void) {
+void control_tiempo(void)
+{
     // Inicializa el tiempo del siguiente evento como un número muy grande
     float min_tiempo_sig_evento = 1.0e+29;
     sig_tipo_evento = 0;
 
     //  Determina el tipo de evento del siguiente evento que debe ocurrir
-    for (int i = 1; i <= num_eventos; ++i) {
+    for (int i = 1; i <= num_eventos; ++i)
+    {
         // Revisa todos los eventos agendados y selecciona el que ocurra primero
-        if (tiempo_sig_evento[i] < min_tiempo_sig_evento) {
+        if (tiempo_sig_evento[i] < min_tiempo_sig_evento)
+        {
             min_tiempo_sig_evento = tiempo_sig_evento[i];
             sig_tipo_evento = i;
         }
     }
 
     // Si la lista de eventos está vacia, se detiene la simulacion.
-    if (sig_tipo_evento == 0) {
+    if (sig_tipo_evento == 0)
+    {
         fprintf(resultados, "\nLa lista de eventos está vacia. Terminando la simulacion.\n\n");
         fprintf(resultados, "Tiempo de terminacion de la simulacion: %8.3f minutos", tiempo_simulacion);
         exit(1);
@@ -139,7 +147,8 @@ void control_tiempo(void) {
 }
 
 // Actualiza los acumuladores de area para las estadisticas de tiempo.
-void actualizar_prom_tiempo(void) {
+void actualizar_prom_tiempo(void)
+{
     // Calcula el intervalo de tiempo que ha pasado desde el último evento
     float time_since_last_event = tiempo_simulacion - tiempo_ultimo_evento;
     // Actualiza el area bajo la funcion de ocupacion del servidor a lo largo del tiempo
@@ -149,15 +158,19 @@ void actualizar_prom_tiempo(void) {
 }
 
 // Funcion de llegada
-void llegada(void) {
+void llegada(void)
+{
     // Se programa la siguiente llegada
     tiempo_sig_evento[1] = tiempo_simulacion + expon(media_entre_llegadas);
 
     // Revisa si el servidor está OCUPADO.
-    if (estado_servidor == OCUPADO) {
+    if (estado_servidor == OCUPADO)
+    {
         // Incrementa el número de clientes perdidos
         ++clientes_perdidos;
-    } else {
+    }
+    else
+    {
         // Incrementa el número de clientes atendidos y pasa el servidor a ocupado
         ++num_clientes_atendidos;
         estado_servidor = OCUPADO;
@@ -168,19 +181,22 @@ void llegada(void) {
 }
 
 // Funcion de salida
-void salida(void) {
+void salida(void)
+{
     // Pasa el servidor a LIBRE y no se tienen salidas programadas
     estado_servidor = LIBRE;
     tiempo_sig_evento[2] = 1.0e+30;
 }
 
 // Retorna una variable aleatoria exponencial con media "media"
-float expon(float media) {
+float expon(float media)
+{
     return -media * log(lcgrand(1));
 }
 
 // Calcula e imprime las medidas deseadas de desempeño
-void reportes(void) {
+void reportes(void)
+{
     fprintf(resultados, "Clientes perdidos:                        %d\n", clientes_perdidos);
     fprintf(resultados, "Clientes atendidos:                       %d\n", num_clientes_atendidos);
     fprintf(resultados, "Probabilidad de pérdida (B de Erlang):    %.3f\n", (float)clientes_perdidos / (clientes_perdidos + num_clientes_atendidos));
