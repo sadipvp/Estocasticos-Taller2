@@ -1,0 +1,13 @@
+Sistema de Colas M/M/4
+---------------------------------------------
+Tiempo promedio de llegada:        8.702 minutos
+Tiempo promedio de atencion:       5.158 minutos
+Numero de clientes:                1000
+
+
+Clientes que esperaron en cola:    117
+Clientes atendidos:                1000
+Probabilidad de espera (Erlang C): 0.117
+Longitud promedio de la cola:      0.173
+Uso promedio de servidores:        1.204
+Tiempo de terminacion:             8543.153 minutos

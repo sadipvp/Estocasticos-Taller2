@@ -1,0 +1,11 @@
+Sistema de Colas M/M/4/4
+---------------------------------------------
+Tiempo promedio de llegada:               8.702 minutos
+Tiempo promedio de atencion:              5.158 minutos
+Numero de clientes:                       1000
+
+Clientes perdidos:                        604
+Clientes atendidos:                       1000
+Probabilidad de pérdida (B de Erlang):    0.377
+Uso del servidor:                         0.382
+Tiempo de terminacion de la simulacion:   13693.380 minutos
